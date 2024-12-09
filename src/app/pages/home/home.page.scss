@@ -1,0 +1,18 @@
+.restaurant-card {
+    background: #1e1e1e;
+    color: white;
+    margin: 16px;
+  }
+  .star-rating {
+    display: flex;
+    padding: 10px 0;
+  }
+  .star-icon {
+    font-size: 24px;
+    padding: 2px;
+    cursor: pointer;
+    color: #ffd700;
+  }
+  ion-card-title, ion-card-subtitle {
+    color: white;
+  }

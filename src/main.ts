@@ -7,6 +7,7 @@ import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 import { environment } from './environments/environment';
+import { Camera } from '@capacitor/camera';
 
 if (environment.production) {
   enableProdMode();

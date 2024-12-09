@@ -1,9 +1,18 @@
-// src/app/pages/home/home.page.ts
+// home.page.ts
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RestaurantService } from '/Users/ICTW-LI-WS-106/foody/src/app/services/restaurant.service';
-import { Restaurant } from '/Users/ICTW-LI-WS-106/foody/src/app/interfaces/restaurant.interface';
+import { FormsModule } from '@angular/forms';
+import { Camera, CameraResultType } from '@capacitor/camera';
+
+interface Restaurant {
+  id: number;
+  name: string;
+  image_url: string;
+  rating: number;
+  is_favorite: boolean;
+  address: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -14,78 +23,135 @@ import { Restaurant } from '/Users/ICTW-LI-WS-106/foody/src/app/interfaces/resta
           Foody - Restaurants
         </ion-title>
       </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          (ionInput)="handleSearch($event)"
+          placeholder="Restaurant suchen..."
+          [debounce]="300"
+        ></ion-searchbar>
+      </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding">
-      <ion-card class="restaurant-card" *ngFor="let restaurant of restaurants">
-        <img alt="Restaurant" [src]="restaurant.image_url || 'assets/default-restaurant.png'"/>
-        <ion-card-header>
-          <ion-card-title>{{restaurant.name}}</ion-card-title>
-          <ion-card-subtitle>{{restaurant.address}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <div class="star-rating">
-            <ion-icon
-              *ngFor="let star of stars; let i = index"
-              [name]="i < restaurant.rating ? 'star' : 'star-outline'"
-              color="warning"
-              (click)="rate(restaurant.id, i + 1)"
-              class="star-icon"
-            ></ion-icon>
-          </div>
-        </ion-card-content>
-      </ion-card>
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let restaurant of filteredRestaurants">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="restaurant.image_url || 'assets/placeholder-restaurant.png'"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{restaurant.name}}</h2>
+            <p>{{restaurant.address}}</p>
+            <div class="rating-actions">
+              <div class="star-rating">
+                <ion-icon
+                  *ngFor="let star of [1,2,3,4,5]"
+                  [name]="star <= restaurant.rating ? 'star' : 'star-outline'"
+                  color="warning"
+                ></ion-icon>
+              </div>
+              <div class="action-buttons">
+                <ion-button fill="clear" (click)="takePicture(restaurant)">
+                  <ion-icon slot="icon-only" name="camera"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" (click)="toggleFavorite(restaurant)">
+                  <ion-icon 
+                    slot="icon-only" 
+                    [name]="restaurant.is_favorite ? 'heart' : 'heart-outline'"
+                    [color]="restaurant.is_favorite ? 'danger' : 'medium'"
+                  ></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
   `,
   styles: [`
-    .restaurant-card {
-      background: #1e1e1e;
-      color: white;
-      margin: 16px;
+    .rating-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
     }
+
     .star-rating {
       display: flex;
-      padding: 10px 0;
+      gap: 4px;
     }
-    .star-icon {
-      font-size: 24px;
-      padding: 2px;
-      cursor: pointer;
-      color: #ffd700;
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
     }
-    ion-card-title, ion-card-subtitle {
-      color: white;
+
+    ion-button {
+      --padding-start: 8px;
+      --padding-end: 8px;
+    }
+
+    ion-icon {
+      font-size: 20px;
     }
   `],
   standalone: true,
-  imports: [IonicModule, CommonModule]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class HomePage implements OnInit {
-  restaurants: Restaurant[] = [];
-  stars = new Array(5);
+  restaurants: Restaurant[] = [
+    {
+      id: 1,
+      name: 'Rest. Barbie',
+      image_url: 'assets/placeholder-restaurant.png',
+      rating: 5,
+      is_favorite: false,
+      address: 'Sample Address'
+    },
+    // Add more sample restaurants as needed
+  ];
+  
+  filteredRestaurants: Restaurant[] = [];
+  searchTerm = '';
 
-  constructor(private restaurantService: RestaurantService) {}
+  constructor() {
+    this.filteredRestaurants = this.restaurants;
+  }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.loadRestaurants();
+  }
+
+  async loadRestaurants() {
+    // Here you would typically load restaurants from a service
+    this.filteredRestaurants = this.restaurants;
+  }
+
+  handleSearch(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    this.filteredRestaurants = this.restaurants.filter(restaurant =>
+      restaurant.name.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  async takePicture(restaurant: Restaurant) {
     try {
-      this.restaurants = await this.restaurantService.getRestaurants();
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri
+      });
+      
+      // Here you would typically upload the image and update the restaurant
+      console.log('Picture taken:', image.webPath);
+      // Update restaurant.image_url with the new image
     } catch (error) {
-      console.error('Error loading restaurants:', error);
+      console.error('Error taking picture:', error);
     }
   }
 
-  async rate(restaurantId: number, rating: number) {
-    try {
-      await this.restaurantService.updateRating(restaurantId, rating);
-      // Update local state
-      this.restaurants = this.restaurants.map(restaurant => {
-        if (restaurant.id === restaurantId) {
-          return { ...restaurant, rating };
-        }
-        return restaurant;
-      });
-    } catch (error) {
-      console.error('Error updating rating:', error);
-    }
+  toggleFavorite(restaurant: Restaurant) {
+    restaurant.is_favorite = !restaurant.is_favorite;
+    // Here you would typically update the favorite status in your service/backend
   }
 }

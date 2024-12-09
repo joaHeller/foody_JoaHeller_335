@@ -4,6 +4,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel
 import { Preferences } from '@capacitor/preferences';
 import { Network } from '@capacitor/network';
 import { FormsModule } from '@angular/forms';
+import { ThemeService } from '/Users/ICTW-LI-WS-106/foody/src/app/services/theme.service';
 
 @Component({
   selector: 'app-settings',
