@@ -4,6 +4,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel
 import { Preferences } from '@capacitor/preferences';
 import { addIcons } from 'ionicons';
 import { heartOutline, trashOutline } from 'ionicons/icons';
+import { CommonModule } from '@angular/common';
 
 interface FavoriteRestaurant {
   id: string;
@@ -39,7 +40,7 @@ interface FavoriteRestaurant {
     </ion-content>
   `,
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonIcon, CommonModule]
 })
 export class FavoritesPage implements OnInit {
   favorites: FavoriteRestaurant[] = [];

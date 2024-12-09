@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonToggle } from '@ionic/angular/standalone';
 import { Preferences } from '@capacitor/preferences';
 import { Network } from '@capacitor/network';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
@@ -44,7 +45,7 @@ import { Network } from '@capacitor/network';
     </ion-content>
   `,
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonToggle]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonToggle, FormsModule ]
 })
 export class SettingsPage implements OnInit {
   darkMode = false;
