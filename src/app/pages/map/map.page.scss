@@ -1,0 +1,23 @@
+// src/app/pages/map/map.page.scss
+ion-content {
+    --background: #f6f6f4;
+  }
+  
+  #map {
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+  }
+  
+  // Stile für die Map-Markers (optional)
+  .leaflet-popup-content {
+    font-size: 14px;
+    padding: 5px;
+  }
+  
+  ::ng-deep .leaflet-control-zoom {
+    border: none !important;
+    margin-right: 15px !important;
+    margin-top: 15px !important;
+  }

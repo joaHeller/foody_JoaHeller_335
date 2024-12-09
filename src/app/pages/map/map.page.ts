@@ -1,58 +1,86 @@
 // src/app/pages/map/map.page.ts
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
-import { Geolocation } from '@capacitor/geolocation';
-import { addIcons } from 'ionicons';
-import { locationOutline, refreshOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { Geolocation } from '@capacitor/geolocation';
+import * as Leaflet from 'leaflet';
 
 @Component({
   selector: 'app-map',
-  template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Restaurant Map</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="getCurrentLocation()">
-            <ion-icon name="refresh-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <div id="map" style="height: 100%; width: 100%"></div>
-      <div *ngIf="errorMsg" class="error-message">
-        {{ errorMsg }}
-      </div>
-    </ion-content>
-  `,
+  templateUrl: './map.page.html',
+  styleUrls: ['./map.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon,  CommonModule]
+  imports: [CommonModule, IonicModule]
 })
 export class MapPage implements OnInit {
-  latitude: number | null = null;
-  longitude: number | null = null;
-  errorMsg: string = '';
+  map: Leaflet.Map | undefined;
+  markers: Leaflet.Marker[] = [];
+  
+  constructor() { }
 
-  constructor() {
-    addIcons({ locationOutline, refreshOutline });
+  async ngOnInit() {
+    setTimeout(() => {
+      this.loadMap();
+    }, 300);
   }
 
-  ngOnInit() {
+  loadMap() {
+    const position = { lat: 51.339695, lng: 12.373075 }; 
+
+    this.map = Leaflet.map('map').setView([position.lat, position.lng], 13);
+
+    Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
+
     this.getCurrentLocation();
   }
 
   async getCurrentLocation() {
     try {
       const coordinates = await Geolocation.getCurrentPosition();
-      this.latitude = coordinates.coords.latitude;
-      this.longitude = coordinates.coords.longitude;
-      console.log(`Location: ${this.latitude}, ${this.longitude}`);
-      // Hier später die Karte und Restaurants in der Nähe anzeigen
+      const position = {
+        lat: coordinates.coords.latitude,
+        lng: coordinates.coords.longitude
+      };
+      
+      if (this.map) {
+        this.map.setView([position.lat, position.lng], 15);
+        
+        const marker = Leaflet.marker([position.lat, position.lng])
+          .addTo(this.map)
+          .bindPopup('Dein Standort')
+          .openPopup();
+        
+        this.markers.push(marker);
+        
+        await this.loadNearbyRestaurants(position);
+      }
     } catch (error) {
-      this.errorMsg = 'Error getting location';
       console.error('Error getting location', error);
     }
+  }
+
+  async loadNearbyRestaurants(position: {lat: number, lng: number}) {
+    if (!this.map) return;
+
+    const mockRestaurants = [
+      { name: 'Restaurant 1', lat: position.lat + 0.002, lng: position.lng + 0.002 },
+      { name: 'Restaurant 2', lat: position.lat - 0.002, lng: position.lng - 0.002 },
+    ];
+
+    mockRestaurants.forEach(restaurant => {
+      const marker = Leaflet.marker([restaurant.lat, restaurant.lng])
+        .addTo(this.map!)
+        .bindPopup(restaurant.name);
+      this.markers.push(marker);
+    });
+  }
+
+  ionViewDidLeave() {
+    if (this.map) {
+      this.map.remove();
+    }
+    this.markers = [];
   }
 }
