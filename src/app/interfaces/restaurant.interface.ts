@@ -7,7 +7,6 @@ export interface Restaurant {
     image_url?: string;
   }
 
-// src/app/interfaces/restaurant.interface.ts
 export interface Restaurant {
     id: number;
     name: string;

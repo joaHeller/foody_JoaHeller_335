@@ -1,56 +1,74 @@
-// src/app/services/restaurant.service.ts
 import { Injectable } from '@angular/core';
-import { supabase } from '../config/supabase.config';
-import { Restaurant } from '../interfaces/restaurant.interface';
+import { Storage } from '@ionic/storage-angular';
+
+export interface Restaurant {
+  id: number;
+  name: string;
+  image_url: string;
+  rating: number;
+  is_favorite: boolean;
+  address: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestaurantService {
-  
-  // Basis-Methode zum Abrufen aller Restaurants
-  async getRestaurants(searchTerm: string = ''): Promise<Restaurant[]> {
-    let query = supabase
-      .from('restaurants')
-      .select('*');
-    
-    if (searchTerm && searchTerm.trim() !== '') {
-      query = query.ilike('name', `%${searchTerm}%`);
-    }
-    
-    const { data, error } = await query;
-    if (error) throw error;
-    return data || [];
+  private FAVORITES_KEY = 'favorites';
+  private _storage: Storage | null = null;
+
+  constructor(private storage: Storage) {
+    this.init();
   }
 
-  // Methode zum Abrufen der Favoriten
+  async init() {
+    const storage = await this.storage.create();
+    this._storage = storage;
+  }
+
   async getFavorites(): Promise<Restaurant[]> {
-    const { data, error } = await supabase
-      .from('restaurants')
-      .select('*')
-      .eq('is_favorite', true);
-    
-    if (error) throw error;
-    return data || [];
+    const favorites = await this._storage?.get(this.FAVORITES_KEY) || [];
+    return favorites;
   }
 
-  // Methode zum Aktualisieren des Favoriten-Status
   async toggleFavorite(restaurantId: number, isFavorite: boolean): Promise<void> {
-    const { error } = await supabase
-      .from('restaurants')
-      .update({ is_favorite: isFavorite })
-      .eq('id', restaurantId);
+    const favorites = await this.getFavorites();
+    
+    if (isFavorite) {
+      const restaurant = this.getRestaurants().find(r => r.id === restaurantId);
+      if (restaurant) {
+        restaurant.is_favorite = true;
+        favorites.push(restaurant);
+      }
+    } else {
+      const index = favorites.findIndex(r => r.id === restaurantId);
+      if (index > -1) {
+        favorites.splice(index, 1);
+      }
+    }
 
-    if (error) throw error;
+    await this._storage?.set(this.FAVORITES_KEY, favorites);
   }
 
-  // Methode zum Aktualisieren des Ratings
-  async updateRating(restaurantId: number, rating: number): Promise<void> {
-    const { error } = await supabase
-      .from('restaurants')
-      .update({ rating })
-      .eq('id', restaurantId);
-
-    if (error) throw error;
+  getRestaurants(): Restaurant[] {
+    return [
+      {
+        id: 1,
+        name: 'Barbie Dream Café',
+        image_url: 'assets/barbie-cafe.png',
+        rating: 5,
+        is_favorite: false,
+        address: 'Traumstraße 1, 12345 Spielzeugstadt'
+      },
+      {
+        id: 2,
+        name: 'Barbies Patisserie',
+        image_url: 'assets/barbie-patisserie.png',
+        rating: 4,
+        is_favorite: false,
+        address: 'Puppengasse 23, 12345 Spielzeugstadt'
+      },
+      // ... weitere Restaurants wie zuvor
+    ];
   }
 }

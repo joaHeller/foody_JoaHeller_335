@@ -1,4 +1,3 @@
-// home.page.ts
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
@@ -20,7 +19,7 @@ interface Restaurant {
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          Foody - Restaurants
+          Foody - Barbie Restaurants
         </ion-title>
       </ion-toolbar>
       <ion-toolbar>
@@ -102,13 +101,44 @@ export class HomePage implements OnInit {
   restaurants: Restaurant[] = [
     {
       id: 1,
-      name: 'Rest. Barbie',
-      image_url: 'assets/placeholder-restaurant.png',
+      name: 'Barbie Dream Café',
+      image_url: 'assets/barbie-cafe.png',
       rating: 5,
       is_favorite: false,
-      address: 'Sample Address'
+      address: 'Traumstraße 1, 12345 Spielzeugstadt'
     },
-    // Add more sample restaurants as needed
+    {
+      id: 2,
+      name: 'Barbies Patisserie',
+      image_url: 'assets/barbie-patisserie.png',
+      rating: 4,
+      is_favorite: false,
+      address: 'Puppengasse 23, 12345 Spielzeugstadt'
+    },
+    {
+      id: 3,
+      name: 'Pink Paradise Restaurant',
+      image_url: 'assets/pink-paradise.png',
+      rating: 5,
+      is_favorite: false,
+      address: 'Rosaplatz 42, 12345 Spielzeugstadt'
+    },
+    {
+      id: 4,
+      name: 'Malibu Kitchen',
+      image_url: 'assets/malibu-kitchen.png',
+      rating: 4,
+      is_favorite: false,
+      address: 'Strandweg 7, 12345 Spielzeugstadt'
+    },
+    {
+      id: 5,
+      name: 'Barbies Gourmet Grille',
+      image_url: 'assets/barbie-grille.png',
+      rating: 3,
+      is_favorite: false,
+      address: 'Fashionstraße 15, 12345 Spielzeugstadt'
+    }
   ];
   
   filteredRestaurants: Restaurant[] = [];
@@ -123,7 +153,6 @@ export class HomePage implements OnInit {
   }
 
   async loadRestaurants() {
-    // Here you would typically load restaurants from a service
     this.filteredRestaurants = this.restaurants;
   }
 
@@ -141,10 +170,7 @@ export class HomePage implements OnInit {
         allowEditing: false,
         resultType: CameraResultType.Uri
       });
-      
-      // Here you would typically upload the image and update the restaurant
       console.log('Picture taken:', image.webPath);
-      // Update restaurant.image_url with the new image
     } catch (error) {
       console.error('Error taking picture:', error);
     }
@@ -152,6 +178,5 @@ export class HomePage implements OnInit {
 
   toggleFavorite(restaurant: Restaurant) {
     restaurant.is_favorite = !restaurant.is_favorite;
-    // Here you would typically update the favorite status in your service/backend
   }
 }
