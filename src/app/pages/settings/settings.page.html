@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Einstellungen</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Dark Mode</ion-label>
+      <ion-toggle 
+        [(ngModel)]="darkMode" 
+        (ionChange)="toggleDarkMode()">
+      </ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Netzwerk Status</h2>
+        <p>{{ connectionStatus }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Push-Benachrichtigungen</h2>
+        <p>Neue Restaurants in der Nähe</p>
+      </ion-label>
+      <ion-toggle 
+        [(ngModel)]="notifications" 
+        (ionChange)="toggleNotifications()">
+      </ion-toggle>
+    </ion-item>
+  </ion-list>
 </ion-content>
