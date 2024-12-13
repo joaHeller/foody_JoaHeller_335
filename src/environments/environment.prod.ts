@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  supabaseUrl: 'https://aaudhruoibyufouoqlaj.supabase.co',
+  supabaseKey: 'process.env.SUPABASE_KEY'
 };

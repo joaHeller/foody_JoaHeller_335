@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8871696e-9944-4781-a529-68e0c22fa7fd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/app/interfaces/restaurant.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/interfaces/restaurant.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/app/pages/favorites/favorites.page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/favorites/favorites.page.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/app/pages/home/home.page.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/home/home.page.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/app/pages/home/home.page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/home/home.page.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/app/services/restaurant.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/services/restaurant.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/179.9fa9a4cb4886d094.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/338.12fcf3e57ead2a20.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/3rdpartylicenses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../www/3rdpartylicenses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/402.243cce6a5d9870cf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/499.dee85932469231d0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/624.9b5db26e192cf4d3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/631.301e32312aa39df9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/687.9fd53c8433c2fdbf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/699.2aebcd5be8f69b5f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/main.7eb774baea337d9d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/polyfills.d2cb04749a7117ac.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../www/runtime.bba2a863280f2183.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2pyvCMpUtozw3o4cP6nNbjmmVo0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "android.gradle.sync.needed": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ICTW-LI-WS-106/foody/android/app"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8871696e-9944-4781-a529-68e0c22fa7fd" name="Changes" comment="" />
+      <created>1733751001109</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733751001109</updated>
+    </task>
+    <servers />
+  </component>
+</project>
